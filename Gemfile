@@ -1,2 +1,2 @@
 source 'https://rubygems.org'
-gem 'sneakers'
+gem 'sneakers', '~> 0.1.1.pre'

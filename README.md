@@ -12,5 +12,8 @@ Needs rabbitmq:
 
 ## Running
 
-`rabbit-server`
+Run rabbitmq
+`rabbitmq-server`
+
+Run gitdo
 `./run.sh`
