@@ -1,6 +1,6 @@
 ## Git document storage
 
-Store a single page documents in Git with branching and merging.
+Store a single page documents in Git 
 
 ## Installation
 
