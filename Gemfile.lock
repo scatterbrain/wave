@@ -4,6 +4,7 @@ GEM
     amq-protocol (1.9.2)
     bunny (1.1.9)
       amq-protocol (>= 1.9.2)
+    rugged (0.21.2)
     serverengine (1.5.10)
       sigdump (~> 0.2.2)
     sigdump (0.2.2)
@@ -19,4 +20,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rugged
   sneakers (~> 0.1.1.pre)
