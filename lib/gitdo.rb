@@ -22,15 +22,14 @@ module GitDo
     #end
     #sha = latest_commit.oid
   
-    #begin
-      obj = repo.read(repo.head.target.tree.first.oid)
-      puts obj.read_raw
-
-      ok
-
-    #rescue Exception => ex
-    #  { :result => 1, :error => ex.message, :bt => ex.backtrace.join("\n") }
-    #end
+    begin
+      latest = repo.head.target
+      oid = latest.tree.first[:oid]
+      blob = repo.lookup(oid)
+      ok({:doc => blob.content, :author => latest.author, :message => latest.message })
+    rescue Exception => ex
+      { :result => 1, :error => ex.message, :bt => ex.backtrace.join("\n") }
+    end
   end
 
   def commit(msg, repo)
@@ -64,7 +63,7 @@ module GitDo
     end
   end
 
-  def ok()
-    { :result => 0}
+  def ok(opts = {})
+    { :result => 0}.merge(opts)
   end
 end
