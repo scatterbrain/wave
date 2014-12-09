@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
-gem 'sneakers', '~> 0.1.1.pre'
-gem 'rugged'
+gem 'sneakers', '~> 1.0.1'
+gem 'rugged', '~> 0.21.2'
