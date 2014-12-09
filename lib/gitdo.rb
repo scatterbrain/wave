@@ -23,9 +23,7 @@ module GitDo
     #sha = latest_commit.oid
   
     #begin
-      puts repo.head.target.inspect
-      #puts repo.rev_parse("HEAD").inspect
-      obj = repo.read("HEAD")
+      obj = repo.read(repo.head.target.tree.first.oid)
       puts obj.read_raw
 
       ok
