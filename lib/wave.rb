@@ -1,6 +1,6 @@
 require 'rugged'
 
-module GitDo
+module Wave
   extend self
 
   REPO_PATH='/tmp/gitdo/'

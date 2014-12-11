@@ -1,10 +1,10 @@
 require 'sneakers'
 require 'json'
-require_relative '../lib/gitdo'
+require_relative '../lib/wave'
 
 class GitProcessor
   include Sneakers::Worker
-  include GitDo
+  include Wave
   from_queue "doc.request", 
     env: nil, #Env nil tells not to mangle the name to doc.request_development
     :durable => true
