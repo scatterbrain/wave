@@ -1,9 +1,30 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (4.1.8)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
     amq-protocol (1.9.2)
     bunny (1.6.3)
       amq-protocol (>= 1.9.2)
+    charlock_holmes (0.6.9.4)
+    escape_utils (0.2.4)
+    gitlab-linguist (3.0.0)
+      charlock_holmes (~> 0.6.6)
+      escape_utils (~> 0.2.4)
+      mime-types (~> 1.19)
+    gitlab_git (7.0.0.rc12)
+      activesupport (~> 4.0)
+      charlock_holmes (~> 0.6)
+      gitlab-linguist (~> 3.0)
+      rugged (~> 0.21.2)
+    i18n (0.6.11)
+    json (1.8.1)
+    mime-types (1.25.1)
+    minitest (5.4.3)
     rugged (0.21.2)
     serverengine (1.5.10)
       sigdump (~> 0.2.2)
@@ -15,10 +36,13 @@ GEM
       thread
     thor (0.19.1)
     thread (0.1.4)
+    thread_safe (0.3.4)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  rugged (~> 0.21.2)
+  gitlab_git (~> 7.0.0.rc12)
   sneakers (~> 1.0.1)

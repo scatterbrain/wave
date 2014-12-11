@@ -1,9 +1,11 @@
+require 'gitlab_git'
 require 'rugged'
 
 module Wave
   extend self
 
-  REPO_PATH='/tmp/gitdo/'
+  REPO_PATH='/tmp/example/example.git'
+  BLOB_PATH="document.md"
 
   def gitdo(msg)
     case msg["cmd"]
@@ -15,31 +17,25 @@ module Wave
   end
 
   def read(repo)
-    #walker.sorting(Rugged::SORT_DATE)
-    #walker.push(repo.head.target)
-    #latest_commit = walker.find do |commit|
-    #  commit.parents.size == 1 
-    #end
-    #sha = latest_commit.oid
-  
     begin
-      latest = repo.head.target
-      oid = latest.tree.first[:oid]
-      blob = repo.lookup(oid)
-      ok({:doc => blob.content, :author => latest.author, :message => latest.message })
+      commit = Gitlab::Git::Commit.last(repo)
+      blob = Gitlab::Git::Blob.find(repo, commit.sha, BLOB_PATH)
+      ok({:doc => blob.data, :author => commit.raw_commit.author, :message => commit.message })
     rescue Exception => ex
       { :result => 1, :error => ex.message, :bt => ex.backtrace.join("\n") }
     end
   end
 
   def commit(msg, repo)
+    #GitLab::Git doesn't have support for commits so we use the raw rugged repo
+    repo = repo.rugged
     oid = repo.write(msg["doc"]["text"], :blob)
     index = repo.index
     begin
       index.read_tree(repo.head.target.tree)
     rescue
     end
-    index.add(:path => "document.md", :oid => oid, :mode => 0100644)
+    index.add(:path => BLOB_PATH, :oid => oid, :mode => 0100644)
 
     options = {}
     options[:tree] = index.write_tree(repo)
@@ -51,15 +47,16 @@ module Wave
     options[:update_ref] = 'HEAD'
 
     Rugged::Commit.create(repo, options)
-    index.write()
+    #index.write()
     ok
   end
 
   def repo()
     begin
-      Rugged::Repository.new(REPO_PATH)
+      Gitlab::Git::Repository.new(REPO_PATH)
     rescue
-      Rugged::Repository.init_at(REPO_PATH)
+      Rugged::Repository.init_at(REPO_PATH, :bare)
+      Gitlab::Git::Repository.new(REPO_PATH)      
     end
   end
 
